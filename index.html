@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTEKRAFT - Craft Your Knowledge, Anywhere</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Tokyo Night Storm Extended Palette */
+            --bg-primary: #121421;
+            --bg-secondary: #1E1E2E;
+            --bg-tertiary: #2A2A3E;
+            --surface: #1A1B26;
+            --surface-light: #24283B;
+            
+            /* Accent Colors */
+            --accent-cyan: #00FFD1;
+            --accent-yellow: #FFD700;
+            --accent-purple: #9B59B6;
+            --accent-pink: #FF79C6;
+            --accent-orange: #FFB86C;
+            --accent-green: #50FA7B;
+            --accent-blue: #8BE9FD;
+            --accent-red: #FF5555;
+            
+            /* Text Colors */
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --text-muted: #6C7293;
+            
+            /* Shadows & Effects */
+            --shadow-glow: 0 0 20px rgba(0, 255, 209, 0.3);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --border-radius: 16px;
+            --border-radius-small: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 209, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(155, 89, 182, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-20px, -20px) rotate(1deg); }
+            66% { transform: translate(20px, -10px) rotate(-1deg); }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(30, 30, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 209, 0.2);
+            padding: 1rem 2rem;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: var(--border-radius-small);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-glow);
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 209, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(0, 255, 209, 0.5); }
+        }
+
+        .logo-text h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: -2px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            background: var(--surface);
+            border: 1px solid rgba(0, 255, 209, 0.3);
+            border-radius: 25px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 209, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .welcome-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple), var(--accent-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Subject Grid */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .subject-card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .subject-card:hover::before {
+            opacity: 1;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-card);
+        }
+
+        /* Individual card colors */
+        .subject-card:nth-child(1) {
+            border-top: 3px solid var(--accent-cyan);
+        }
+        .subject-card:nth-child(1):hover {
+            box-shadow: 0 20px 40px rgba(0, 255, 209, 0.3);
+        }
+
+        .subject-card:nth-child(2) {
+            border-top: 3px solid var(--accent-yellow);
+        }
+        .subject-card:nth-child(2):hover {
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .subject-card:nth-child(3) {
+            border-top: 3px solid var(--accent-purple);
+        }
+        .subject-card:nth-child(3):hover {
+            box-shadow: 0 20px 40px rgba(155, 89, 182, 0.3);
+        }
+
+        .subject-card:nth-child(4) {
+            border-top: 3px solid var(--accent-pink);
+        }
+        .subject-card:nth-child(4):hover {
+            box-shadow: 0 20px 40px rgba(255, 121, 198, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 1s ease-out 0.5s;
+        }
+
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .welcome-section h2 {
+                font-size: 2.5rem;
+            }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .subject-card {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-section h2 {
+                font-size: 2rem;
+            }
+
+            .card-icon {
+                font-size: 2.5rem;
+            }
+
+            .card-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">✏️</div>
+                <div class="logo-text">
+                    <h1>NOTEKRAFT</h1>
+                    <p>Craft Your Knowledge, Anywhere</p>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-bar" placeholder="Search across all subjects..." id="globalSearch">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="welcome-section">
+            <h2>Your Study Universe</h2>
+            <p>Master your subjects with beautifully crafted notes, seamless navigation, and powerful search. Your knowledge, organized and accessible anywhere.</p>
+        </section>
+
+        <section class="subjects-grid" id="subjectsGrid">
+            <div class="subject-card" onclick="navigateToSubject('becf')">
+                <span class="card-icon">⚡</span>
+                <h3 class="card-title">BECF</h3>
+                <p class="card-subtitle">Basics of Electronic Fundamentals</p>
+                <p class="card-description">Master DC/AC circuits, electronic components, semiconductor devices, and fundamental electronic principles.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%; background: linear-gradient(90deg, #00FFD1, #8BE9FD);"></div>
+                </div>
+                <p class="progress-text">12 topics • 75% complete</p>
+            </div>
+
+            <div class="subject-card" onclick="navigateToSubject('maths')">
+                <span class="card-icon">📐</span>
+                <h3 class="card-title">Mathematics</h3>
+                <p class="card-subtitle">Advanced Mathematical Concepts</p>
+                <p class="card-description">Explore calculus, algebra, trigonometry, statistics, and mathematical modeling for engineering applications.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%; background: linear-gradient(90deg, #FFD700, #FFB86C);"></div>
+                </div>
+                <p class="progress-text">15 topics • 60% complete</p>
+            </div>
+
+            <div class="subject-card" onclick="navigateToSubject('dld')">
+                <span class="card-icon">🔲</span>
+                <h3 class="card-title">DLD</h3>
+                <p class="card-subtitle">Digital Logic Design</p>
+                <p class="card-description">Understand logic gates, Boolean algebra, combinational circuits, sequential circuits, and digital system design.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 45%; background: linear-gradient(90deg, #9B59B6, #FF79C6);"></div>
+                </div>
+                <p class="progress-text">10 topics • 45% complete</p>
+            </div>
+
+            <div class="subject-card" onclick="navigateToSubject('python')">
+                <span class="card-icon">🐍</span>
+                <h3 class="card-title">Python</h3>
+                <p class="card-subtitle">Python Programming</p>
+                <p class="card-description">Learn Python fundamentals, data structures, algorithms, object-oriented programming, and advanced concepts.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, #FF79C6, #50FA7B);"></div>
+                </div>
+                <p class="progress-text">18 topics • 80% complete</p>
+            </div>
+        </section>
+
+
+    </main>
+
+    <script>
+        // Navigation function
+        function navigateToSubject(subject) {
+            window.location.href = `${subject}/index.html`;
+        }
+
+        // Search functionality
+        document.getElementById('globalSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.subject-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const subtitle = card.querySelector('.card-subtitle').textContent.toLowerCase();
+                const description = card.querySelector('.card-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || subtitle.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInUp 0.3s ease-out';
+                } else {
+                    card.style.display = searchTerm === '' ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Add stagger animation to cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.subject-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
