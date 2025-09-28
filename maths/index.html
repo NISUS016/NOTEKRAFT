@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics - NOTEKRAFT</title>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Tokyo Night Storm Extended Palette */
+            --bg-primary: #121421;
+            --bg-secondary: #1E1E2E;
+            --bg-tertiary: #2A2A3E;
+            --surface: #1A1B26;
+            --surface-light: #24283B;
+            
+            /* Mathematics Theme - Yellow/Orange Focus */
+            --accent-primary: #FFD700;
+            --accent-secondary: #FFB86C;
+            --accent-tertiary: #FFA500;
+            --accent-gradient: linear-gradient(135deg, #FFD700, #FFB86C);
+            
+            /* Supporting Colors */
+            --accent-cyan: #00FFD1;
+            --accent-purple: #9B59B6;
+            --accent-pink: #FF79C6;
+            --accent-green: #50FA7B;
+            --accent-blue: #8BE9FD;
+            
+            /* Text Colors */
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --text-muted: #6C7293;
+            
+            /* Effects */
+            --shadow-glow: 0 0 20px rgba(255, 215, 0, 0.3);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --border-radius: 16px;
+            --border-radius-small: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 184, 108, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 165, 0, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            animation: mathFloat 25s ease-in-out infinite;
+        }
+
+        @keyframes mathFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-15px, -25px) rotate(0.5deg); }
+            66% { transform: translate(25px, -15px) rotate(-0.5deg); }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(30, 30, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 1rem 2rem;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent-primary);
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .breadcrumb-current {
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            background: var(--surface);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 25px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-primary);
+            font-size: 1.1rem;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Subject Header */
+        .subject-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .subject-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+        }
+
+        .subject-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subject-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .subject-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Topics Grid */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .topic-card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .topic-card:hover::before {
+            opacity: 1;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
+            border-color: var(--accent-primary);
+        }
+
+        .topic-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .topic-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .topic-difficulty {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .difficulty-beginner {
+            background: rgba(80, 250, 123, 0.2);
+            color: var(--accent-green);
+            border: 1px solid rgba(80, 250, 123, 0.3);
+        }
+
+        .difficulty-intermediate {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--accent-primary);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .difficulty-advanced {
+            background: rgba(255, 85, 85, 0.2);
+            color: #FF5555;
+            border: 1px solid rgba(255, 85, 85, 0.3);
+        }
+
+        .topic-description {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .topic-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--accent-secondary);
+            border-radius: 12px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .subject-title {
+                font-size: 2.5rem;
+            }
+
+            .subject-icon {
+                font-size: 3rem;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .topic-card {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .subject-title {
+                font-size: 2rem;
+            }
+
+            .topic-icon {
+                font-size: 2rem;
+            }
+
+            .topic-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <nav class="breadcrumb">
+                <a href="../index.html">🏠 Home</a>
+                <span class="breadcrumb-separator">→</span>
+                <span class="breadcrumb-current">📐 Mathematics</span>
+            </nav>
+            
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-bar" placeholder="Search mathematics topics..." id="topicSearch">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="subject-header">
+            <span class="subject-icon">📐</span>
+            <h1 class="subject-title">Mathematics</h1>
+            <p class="subject-subtitle">Advanced Mathematical Concepts</p>
+            <p class="subject-description">
+                Explore the beautiful world of mathematics with comprehensive notes covering calculus, 
+                algebra, trigonometry, statistics, and mathematical modeling for engineering applications. 
+                Master the language of science and engineering.
+            </p>
+        </section>
+
+
+
+        <section class="topics-grid" id="topicsGrid">
+            <!-- Add your mathematics topic cards here -->
+            <!-- Example structure for when you provide content:
+            <div class="topic-card" onclick="navigateToTopic('topic-name')">
+                <span class="topic-icon">📊</span>
+                <h3 class="topic-title">Topic Title</h3>
+                <span class="topic-difficulty difficulty-beginner">Beginner</span>
+                <p class="topic-description">
+                    Topic description goes here...
+                </p>
+                <div class="topic-tags">
+                    <span class="tag">Tag1</span>
+                    <span class="tag">Tag2</span>
+                </div>
+            </div>
+            -->
+        </section>
+    </main>
+
+    <script>
+        // Navigation function
+        function navigateToTopic(topic) {
+            window.location.href = `${topic}.html`;
+        }
+
+        // Search functionality
+        document.getElementById('topicSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.topic-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.topic-title').textContent.toLowerCase();
+                const description = card.querySelector('.topic-description').textContent.toLowerCase();
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase()).join(' ');
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || tags.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInUp 0.3s ease-out';
+                } else {
+                    card.style.display = searchTerm === '' ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Add stagger animation to cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.topic-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('../sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
