@@ -135,8 +135,8 @@ The Mathematics section has been fully developed with:
 ---
 
 ## 🔗 **Project Links:**
-- **Repository:** https://github.com/NISUS1069/NOTEKRAFT
-- **Live URL:** https://nisus1069.github.io/NOTEKRAFT
+- **Repository:** https://github.com/NISUS106/NOTEKRAFT
+- **Live URL:** https://nisus106.github.io/NOTEKRAFT
 
 ---
 
